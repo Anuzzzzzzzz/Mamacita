@@ -1,0 +1,23 @@
+import json
+json_example_string = """
+{
+  "name": "John Doe",
+  "age": 30,
+  "isStudent": false,
+  "courses": [
+    {
+      "title": "History",
+      "credits": 3
+    },
+    {
+      "title": "Math",
+      "credits": 4
+    }
+  ],
+  "address": null
+}
+"""
+
+data = json.loads(json_example_string)
+
+print(data)
