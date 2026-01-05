@@ -30,7 +30,7 @@ data = json.loads(complex_json_string)
 products = data["products"]
 
 first_product_storage = products[0]["specs"]["storage"]
-second_product_storage = products[1]["specs"]["storage"]
+second_product_ram = products[1]["specs"]["ram"]
 
 print("First product storage:", first_product_storage)
-print("Second product storage:", second_product_storage)
+print("Second product ram:", second_product_ram)
