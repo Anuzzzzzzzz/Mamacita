@@ -1,0 +1,13 @@
+{
+    "name": "Anuj Paudel",
+    "email": "anuj@example.com",
+    "hobbies": [
+        "coding",
+        "reading",
+        "gaming"
+    ],
+    "address": {
+        "city": "Kathmandu",
+        "zip_code": "44600"
+    }
+}
