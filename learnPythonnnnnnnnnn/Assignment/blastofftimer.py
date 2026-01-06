@@ -10,6 +10,6 @@
 
 
 start_number = int(input("Enter the start number for the countdown: "))
-for numbr in range(start_number, 0, -1):
-    print(f"T-minus {numbr}...")
-print("BLAST OFF!") 
+for number in range(start_number, 0, -1):
+    print(f"T-minus {number}...")           
+print("BLAST OFF🚀🗿!") 

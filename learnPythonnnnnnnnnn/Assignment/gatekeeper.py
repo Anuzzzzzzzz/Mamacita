@@ -12,6 +12,7 @@
 #  - Else: Print &quot;Wrong PIN, try again
 
 secret = 1234
+
 attempts = 0
 
 while True:
@@ -22,6 +23,7 @@ while True:
         print("Access Granted")
         break
     elif attempts == 3:
+
         print("System Locked")
         break
     else:
