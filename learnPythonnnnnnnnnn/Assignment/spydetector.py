@@ -13,8 +13,8 @@
 # 5. Print the final clean message and the count.
 
 scrambled = "##gnimmargorP nohtyP evoL I##"
-cleaneed = scrambled.replace("#", "")
-reversed_message = cleaneed[::-1]
+cleaned = scrambled.replace("#", "")
+reversed_message = cleaned[::-1]
 o_count = reversed_message.lower().count("o")
 print(f"Decoded Message: {reversed_message}")
 print(f"Number of 'o's: {o_count}")

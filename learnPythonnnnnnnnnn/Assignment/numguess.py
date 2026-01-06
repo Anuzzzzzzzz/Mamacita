@@ -29,3 +29,6 @@ while True:
             break
         else:
             print("Try again!")
+    else:
+        print("Please enter a valid number or 'quit' to exit.") 
+        
