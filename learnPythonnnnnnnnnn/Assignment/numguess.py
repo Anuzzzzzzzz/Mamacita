@@ -19,11 +19,13 @@ while True:
     if user_input.lower() == "quit":
         print("Game exited.")
         break
+    if user_input.isdigit():
+        
 
-    guess = int(user_input)
+        guess = int(user_input)
 
-    if guess == correct_number:
-        print("You won!🏆")
-        break
-    else:
-        print("Try again!😔🌀")
+        if guess == correct_number:
+            print("You won!")
+            break
+        else:
+            print("Try again!")
