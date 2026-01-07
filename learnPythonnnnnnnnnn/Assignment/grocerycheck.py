@@ -16,12 +16,12 @@
 # using set(cart).
 # 5. Final Output: Print &quot;Total Bill: $[Amount]&quot;.
 
-prices={"Apple":2,"banana":1,"Milk":5}
+prices={"Apple":2,"Banana":1,"Milk":5}
 cart=["Apple","Apple","Milk","Banana"]
 total_cost=0
 for item in cart:
-    item_lower=item.lower()
-    if item_lower in prices:
-        total_cost += prices[item_lower]
-print("Unique items bought:", set(cart))
+    total_cost += prices[item]
+unique_items=set(cart)
+print("Unique Items Bought:", unique_items)
 print(f"Total Bill: ${total_cost}")
+
