@@ -20,11 +20,13 @@
 # 6. Final Check: Print the updated guests list and
 # the address tuple.
 
+guests = ["Alice", "Bob", "Charlie"]
+guests.append("David")
+guests.remove("Bob")
+address = ("123 Main St", "New York")
 
-guests = ["anuj", "aaku", "danuzz"]
-guests.append("panuz")
-guests.remove("danuzz")
-address = ("patan, sundhara", "nepal")
+# Tuples cannot be changed
+# address[1] = "London"
 
-print("Guest List:", guests)
+print("Final Guest List:", guests)
 print("Party Location:", address)
