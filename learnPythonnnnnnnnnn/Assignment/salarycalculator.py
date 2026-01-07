@@ -18,9 +18,8 @@ def calculate_salary(hours, hourly_rate):
     else:
         net_salary = gross * 0.95  # Deduct 5%
     return net_salary
-# Calling the function for John
 john_salary = calculate_salary(40, 100)
 print(f"John's Net Salary: ${john_salary}")
-# Calling the function for Jane
 jane_salary = calculate_salary(60, 200)
 print(f"Jane's Net Salary: ${jane_salary}")
+
