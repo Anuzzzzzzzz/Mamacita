@@ -1,15 +1,30 @@
-from database import Base, engine, SessionLocal
-import models  # important: import models to register tables
-from models import Blog
+# FastApi/Mmain.py
+from .database import Base, engine, SessionLocal
+from .models import Blog
 
-# 1. Create tables in the database
+print("🟢 Creating database tables...")
 Base.metadata.create_all(bind=engine)
+print("✅ Tables created successfully!")
 
-# 2. Create a new blog entry
+# Open DB session
 db = SessionLocal()
-new_blog = Blog(title="First Post", content="This is my first blog post!")
-db.add(new_blog)
+
+# Seed some blogs
+blogs_to_add = [
+    Blog(title="First Post", content="This is the first blog post!", author="Anuj"),
+    Blog(title="Second Post", content="Learning SQLAlchemy + FastAPI", author="Aakriti"),
+    Blog(title="Third Post", content="Databases are fun!", author="Anuj"),
+]
+
+for blog in blogs_to_add:
+    db.add(blog)
 db.commit()
-db.refresh(new_blog)
-print(f"Blog added with ID: {new_blog.id}")
+
+# Fetch all blogs for display
+all_blogs = db.query(Blog).all()
+print("📄 Current blogs in database:")
+for b in all_blogs:
+    print(b)
+
 db.close()
+print("✅ Database setup & seeding completed!")

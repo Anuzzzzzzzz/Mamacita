@@ -1,11 +1,16 @@
+# FastApi/database.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+import os
 
-SQLAlchemyDatabaseURL = "sqlite:///./blog.db"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "blog.db")
+
+SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(
-    SQLAlchemyDatabaseURL, 
-    connect_args={"check_same_thread": False}  # for SQLite + FastAPI
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={"check_same_thread": False}
 )
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
