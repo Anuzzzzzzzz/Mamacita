@@ -1,41 +1,8 @@
 # File: FastApi/schemas.py
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Boolean
-from sqlalchemy.orm import relationship
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import List, Optional
-from databases import Base
 
-# ==========================================
-# PART 1: DATABASE TABLES (SQLAlchemy)
-# ==========================================
-
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    is_active = Column(Boolean, default=True)
-
-    # Relationship: One User has many Items
-    items = relationship("Item", back_populates="owner")
-
-class Item(Base):
-    __tablename__ = "items"
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
-    price = Column(Float)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-
-    # Relationship: An Item belongs to one User
-    owner = relationship("User", back_populates="items")
-
-
-# ==========================================
-# PART 2: DATA VALIDATION (Pydantic)
-# ==========================================
-
-# --- Item Schemas ---
+# --- ITEM SCHEMAS ---
 class ItemBase(BaseModel):
     title: str
     description: Optional[str] = None
@@ -49,19 +16,23 @@ class ItemResponse(ItemBase):
     owner_id: int
 
     class Config:
-        from_attributes = True  # Allows reading from ORM objects
+        from_attributes = True
 
-# --- User Schemas ---
+# --- USER SCHEMAS ---
 class UserBase(BaseModel):
-    email: str
+    email: EmailStr
 
 class UserCreate(UserBase):
+    password: str
+
+class UserLogin(BaseModel):
+    email: EmailStr
     password: str
 
 class UserResponse(UserBase):
     id: int
     is_active: bool
-    items: List[ItemResponse] = [] # Returns the user's items too!
+    items: List[ItemResponse] = []
 
     class Config:
-        from_attributes = True  # Allows reading from ORM objects
+        from_attributes = True

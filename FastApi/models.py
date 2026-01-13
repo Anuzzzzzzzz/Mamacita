@@ -1,14 +1,27 @@
-# FastApi/models.py
-from sqlalchemy import Column, Integer, String
-from .databases import Base
+# File: FastApi/models.py
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float
+from sqlalchemy.orm import relationship
+from databases import Base
 
-class Blog(Base):
-    __tablename__ = "blogs"
+class User(Base):
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, nullable=False)
-    content = Column(String, nullable=False)
-    author = Column(String, nullable=True)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    is_active = Column(Boolean, default=True)
 
-    def __repr__(self):
-        return f"<Blog(id={self.id}, title='{self.title}', author='{self.author}')>"
+    # Relationship: One User -> Many Items
+    items = relationship("Item", back_populates="owner")
+
+class Item(Base):
+    __tablename__ = "items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True)
+    description = Column(String, index=True)
+    price = Column(Float)
+    owner_id = Column(Integer, ForeignKey("users.id"))
+
+    # Relationship: Item -> One User
+    owner = relationship("User", back_populates="items")
