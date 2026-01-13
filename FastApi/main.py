@@ -148,7 +148,7 @@ def root():
             <div class="card">
                 <h1>Anuz User System</h1>
                 <p>
-                    Secure and Fast like me .<br>
+                    Secure and Fast <br>
                     System Status: Online <span class="status-dot"></span>
                 </p>
                 <a href="/docs" class="btn">Access Dashboard</a>
