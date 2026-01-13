@@ -1,6 +1,15 @@
-/
+# --- IDE Settings (Add this!) ---
+.vscode/
+
+# --- Database (Add this!) ---
+*.db
+*.sqlite3
+
+# --- Python System Files ---
 __pycache__/
 *.pyc
-.DS_Store   
-.ipynb_checkpoints/     
+.DS_Store
+.ipynb_checkpoints/
+
+# --- Virtual Environment ---
 .venv/
