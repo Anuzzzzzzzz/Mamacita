@@ -1,5 +1,5 @@
 # FastApi/Mmain.py
-from .database import Base, engine, SessionLocal
+from .databases import Base, engine, SessionLocal
 from .models import Blog
 
 print("🟢 Creating database tables...")
