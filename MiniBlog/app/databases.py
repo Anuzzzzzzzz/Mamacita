@@ -1,21 +1,24 @@
-# app/database.py
+#databases.py
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
-import os
-from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import sessionmaker, Session, declarative_base
 
+# ==========================================
+# 1. DATABASE SETUP (SQLite)
+# ==========================================
+# Create a file named 'test.db' in the current directory
+SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
-# Path for SQLite
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "blog.db")
-
-SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread":False}
-
+    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
 
-SessionLocal= sessionmaker(bind=engine, autoflush=False, autocommit= False)
-Base= declarative_base()
+# Create a session factory
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Base class for your database models (if you create tables later)
+Base = declarative_base()
+
+# Create the tables (just in case you add models later)
+Base.metadata.create_all(bind=engine)
+
