@@ -22,3 +22,10 @@ class TeacherResponse(TeacherBase):
 class TeacherDashboard(BaseModel):
     total_staff: int
     active_hiring: bool
+
+class SubjectResponse(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True

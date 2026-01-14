@@ -2,32 +2,29 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from . import models, schemas
 
-
-def create_school(db: Session, school: schemas.SchoolCreate):
-    db_school = models.School(**school.model_dump())
-    db.add(db_school)
+# --- CREATE TEACHER ---
+def create_teacher(db: Session, teacher: schemas.TeacherCreate):
+    db_teacher = models.Teacher(**teacher.model_dump())
+    db.add(db_teacher)
     db.commit()
-    db.refresh(db_school)
-    return db_school
+    db.refresh(db_teacher)
+    return db_teacher
 
-def get_all_schools(db: Session):
-    return db.query(models.School).all()
+# --- GET ALL TEACHERS ---
+def get_teachers(db: Session):
+    return db.query(models.Teacher).all()
 
-def get_school_dashboard(db: Session):
-    # This prevents the "Table already defined" error
-    import student.models
-    import teacher.models
-    
-    # Count rows in database
-    s_count = db.query(func.count(models.School.id)).scalar()
-    stu_count = db.query(func.count(student.models.Student.id)).scalar()
-    t_count = db.query(func.count(teacher.models.Teacher.id)).scalar()
-    
-    return {
-        "total_schools": s_count,
-        "total_students": stu_count,
-        "total_teachers": t_count
-    }
+# --- GET TEACHER SUBJECTS ---
+def get_teacher_subjects(db: Session, teacher_id: int):
+    return db.query(models.Subject).join(models.TeacherSubject).filter(
+        models.TeacherSubject.teacher_id == teacher_id
+    ).all()
 
-def get_school(db: Session, school_id: int):
-    return db.query(models.School).filter(models.School.id == school_id).first()
+# --- DASHBOARD ---
+def get_teacher_dashboard(db: Session):
+    total_staff = db.query(func.count(models.Teacher.id)).scalar()
+    active_hiring = db.query(models.Hiring).filter(models.Hiring.is_active == True).count() > 0
+    return schemas.TeacherDashboard(
+        total_staff=total_staff,
+        active_hiring=active_hiring
+    )
