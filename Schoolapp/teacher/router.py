@@ -10,10 +10,10 @@ router = APIRouter(prefix="/teacher", tags=["teacher"])
 def get_dashboard(db: Session = Depends(get_db)):
     return service.get_teacher_dashboard(db)
 
-@router.post("/", response_model=schemas.TeacherResponse)
+@router.post("/create_teacher", response_model=schemas.TeacherResponse)
 def create_teacher(teacher: schemas.TeacherCreate, db: Session = Depends(get_db)):
     return service.create_teacher(db, teacher)
 
-@router.get("/", response_model=list[schemas.TeacherResponse])
+@router.get("/get_teachers", response_model=list[schemas.TeacherResponse])
 def read_teachers(db: Session = Depends(get_db)):
     return service.get_teachers(db)
