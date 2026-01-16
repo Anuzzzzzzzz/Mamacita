@@ -27,6 +27,11 @@ def read_teachers(db: Session = Depends(get_db)):
 def get_teacher_subjects_api(teacher_id: int, db: Session = Depends(get_db)):
     return service.get_teacher_subjects(db, teacher_id)
 
+@router.post("/create_teacher_subject", response_model=schemas.TeacherSubjectResponse)
+def create_teacher_subject(teacher_subject: schemas.TeacherSubjectCreate,
+                            db: Session = Depends(get_db)):
+     db_teacher_subject = service.create_teacher_subject(db, teacher_subject)
+     return db_teacher_subject
 
 # ---------- HTML ROUTE ----------
 @router.get("/get_teacher_subjects/{teacher_id}", response_class=HTMLResponse)

@@ -29,3 +29,18 @@ class SubjectResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+# --- TEACHER-SUBJECT SCHEMAS ---
+from pydantic import BaseModel
+
+class TeacherSubjectCreate(BaseModel):
+    teacher_id: int
+    subject_id: int
+
+class TeacherSubjectResponse(BaseModel):
+    id: int
+    teacher_id: int
+    subject_id: int
+
+    class Config:
+        from_attributes = True
