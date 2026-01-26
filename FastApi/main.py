@@ -11,7 +11,7 @@ models.Base.metadata.create_all(bind=engine)
 
 # 2. Initialize App
 app = FastAPI(
-    title="User System ☄️",
+    title="Anuz User System ☄️",
     description="Professional CRUD system",
     version="1.0.0"
 )
@@ -19,7 +19,6 @@ app = FastAPI(
 # 3. Include the Router
 app.include_router(api_router)
 
-# 4. The "Rich & Professional" Landing Page
 @app.get("/", response_class=HTMLResponse, tags=["General"])
 def root():
     return """
