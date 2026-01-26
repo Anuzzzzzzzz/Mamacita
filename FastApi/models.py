@@ -1,4 +1,3 @@
-# File: FastApi/models.py
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from databases import Base
@@ -11,8 +10,12 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-    # Relationship: One User -> Many Items
-    items = relationship("Item", back_populates="owner")
+    items = relationship(
+        "Item",
+        back_populates="owner",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
 
 class Item(Base):
     __tablename__ = "items"
@@ -21,7 +24,11 @@ class Item(Base):
     title = Column(String, index=True)
     description = Column(String, index=True)
     price = Column(Float)
-    owner_id = Column(Integer, ForeignKey("users.id"))
 
-    # Relationship: Item -> One User
+    owner_id = Column(
+        Integer,
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
     owner = relationship("User", back_populates="items")
