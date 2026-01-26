@@ -26,7 +26,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     
     # 2. Create the user
     fake_hashed_password = user.password + "notreallyhashed"
-    new_user = models.User(email=user.email, hashed_password=fake_hashed_password)
+    new_user = models.User(email = user.email , hashed_password=fake_hashed_password)
     
     db.add(new_user)
     db.commit()
@@ -90,6 +90,27 @@ def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 # ==========================
 # DELETE OPERATIONS
 # ==========================
+
+
+#delete user
+@api_router.delete("/users/{user_id}", tags=["Users"])
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    # 1. Find user
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found 😞")
+
+    # 2. Delete user (items deleted automatically IF relationship has cascade)
+    db.delete(user)
+    db.commit()
+
+    return {
+        "message": "User deleted successfully 🗑️",
+        "user_id": user_id
+    }
+
+
 
 @api_router.delete("/items/{item_id}", tags=["Items"])
 def delete_item(item_id: int, db: Session = Depends(get_db)):
