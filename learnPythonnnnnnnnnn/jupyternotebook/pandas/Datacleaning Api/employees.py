@@ -3,11 +3,8 @@ from pydantic import BaseModel
 import pandas as pd
 
 app = FastAPI()
-
-# load the cleaned CSV
 df = pd.read_csv("cleaned_employees.csv")
 
-# POST input schema
 class Employee(BaseModel):
     name: str
     age: int
@@ -17,38 +14,27 @@ class Employee(BaseModel):
 
 @app.get("/")
 def home():
-    return {"message": "API running"}
+    return {"message": "Employee API running"}
 
-# get employees
 @app.get("/employees")
 def get_employees():
-    # replace NaN with empty string so JSON works
     return df.fillna("").to_dict(orient="records")
 
-# POST new employee
 @app.post("/employees")
 def add_employee(emp: Employee):
     global df
 
-    # this prevents duplicates name
+    # fill unknowns if left empty
+    dept = emp.department if emp.department.strip() != "" else "Unknown"
+    date = emp.join_date if emp.join_date.strip() != "" else "Unknown"
+
+    # prevent duplicates
     if emp.name in df["name"].values:
         return {"message": "Employee already exists!"}
+    # add new row with next id
+    df.loc[len(df)] = [int(df["id"].max()) + 1, emp.name, emp.age, emp.salary, dept, date]
 
-    # create a new row dictionary including the next ID
-    # we do this because the CSV already has 'id' for each employee
-    new_row = {
-        "id": int(df["id"].max()) + 1,  # next ID
-        "name": emp.name,
-        "age": emp.age,
-        "salary": emp.salary,
-        "department": emp.department,
-        "join_date": emp.join_date
-    }
-
-    # add the new row to the DataFrame
-    df.loc[len(df)] = new_row
-
-    # save the updated DataFrame back to CSV
     df.to_csv("cleaned_employees.csv", index=False)
 
-    return new_row
+    return {"id": int(df["id"].max()), "name": emp.name, "age": emp.age, "salary": emp.salary,
+            "department": dept, "join_date": date}
