@@ -1,41 +1,54 @@
 from fastapi import FastAPI
-import pandas as pd
 from pydantic import BaseModel
+import pandas as pd
 
 app = FastAPI()
 
-# Load cleaned dataset
-df_cleaned = pd.read_csv("cleaned_employees.csv")
+# load the cleaned CSV
+df = pd.read_csv("cleaned_employees.csv")
 
-# Schemas
-class Item(BaseModel):
+# POST input schema
+class Employee(BaseModel):
     name: str
     age: int
     salary: int
+    department: str
+    join_date: str
 
-# Root endpoint
 @app.get("/")
-def root():
-    return {"status": "Employee API running"}
+def home():
+    return {"message": "API running"}
 
-# GET all employees
+# get employees
 @app.get("/employees")
 def get_employees():
-    return df_cleaned.to_dict(orient="records")
+    # replace NaN with empty string so JSON works
+    return df.fillna("").to_dict(orient="records")
 
 # POST new employee
-@app.post(
-    "/employees",
-    response_model=Item,
-    tags=["employees"],
-)
-def create_employee(employee: Item):
-    global df_cleaned  # ensure we modify the global DataFrame
+@app.post("/employees")
+def add_employee(emp: Employee):
+    global df
 
-    # Append new employee to DataFrame
-    df_cleaned = pd.concat([df_cleaned, pd.DataFrame([employee.dict()])], ignore_index=True)
+    # this prevents duplicates name
+    if emp.name in df["name"].values:
+        return {"message": "Employee already exists!"}
 
-    # Save updated DataFrame back to CSV
-    df_cleaned.to_csv("cleaned_employees.csv", index=False)
+    # create a new row dictionary including the next ID
+    # we do this because the CSV already has 'id' for each employee
+    new_row = {
+        "id": int(df["id"].max()) + 1,  # next ID
+        "name": emp.name,
+        "age": emp.age,
+        "salary": emp.salary,
+        "department": emp.department,
+        "join_date": emp.join_date
+    }
 
-    return employee
+    # add the new row to the DataFrame
+    df.loc[len(df)] = new_row
+
+    # save the updated DataFrame back to CSV
+    df.to_csv("cleaned_employees.csv", index=False)
+
+    return new_row

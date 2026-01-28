@@ -60,3 +60,6 @@ id,name,age,salary,department,join_date,bonus,performance_score
 60.0,George,43,79000,unknown,2015-05-05,7900.0,5.0
 ,Aakriti,20,10000000,,,,
 ,Aakriti,20,10000000,,,,
+61.0,Danuzz,9000,90000,Vegapunk,2020,9000.0,1.0
+62.0,Danuzz,9000,90000,Vegapunk,2020,9000.0,5.0
+63.0,huhu,0,0,string,string,,
