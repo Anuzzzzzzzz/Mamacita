@@ -16,4 +16,5 @@ __pycache__/
 
 .idea
 FastApi/sql_app.db
+
 *.csv
