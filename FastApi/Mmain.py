@@ -2,7 +2,7 @@
 from .databases import Base, engine, SessionLocal
 from .models import Blog
 
-print("🟢 Creating database tables...")
+print("🟢 Creating Database tables...")
 Base.metadata.create_all(bind=engine)
 print("✅ Tables created successfully!")
 
@@ -22,7 +22,7 @@ db.commit()
 
 # Fetch all blogs for display
 all_blogs = db.query(Blog).all()
-print("📄 Current blogs in database:")
+print("📄 Current blogs in Database:")
 for b in all_blogs:
     print(b)
 
