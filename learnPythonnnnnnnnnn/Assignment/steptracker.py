@@ -1,5 +1,5 @@
 # Task 3.1: The Daily Step Tracker
-# Scenario: A fitness app needs to calculate the total steps
+# Scenario: A fitness App needs to calculate the total steps
 # taken in a week and find average.
 # Instructions:
 # 1. Create a list of steps for 7 days: steps = [4000, 5000,

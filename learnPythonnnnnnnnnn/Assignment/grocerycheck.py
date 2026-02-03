@@ -1,5 +1,5 @@
 # Task 7.2: The Grocery Price Checker
-# Scenario: You have a shopping list and a database of prices.
+# Scenario: You have a shopping list and a Database of prices.
 # You need to calculate the bill.
 # Instructions:
 # 1. Database: Create a dictionary prices = {&quot;Apple&quot;:
