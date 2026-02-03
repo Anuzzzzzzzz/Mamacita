@@ -16,7 +16,7 @@ engine = create_engine(
 # Create a session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Base class for your database models (if you create tables later)
+# Base class for your Database models (if you create tables later)
 Base = declarative_base()
 
 # Create the tables (just in case you add models later)

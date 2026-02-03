@@ -1,4 +1,4 @@
-# app/models.py
+# App/models.py
 from sqlalchemy import Column, Integer, String, Text
 from .databases import Base # Ensure this matches your project structure
 

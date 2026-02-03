@@ -1,4 +1,4 @@
-# app/main.py
+# App/main.py
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from . import models, schemas, databases as database
@@ -6,7 +6,7 @@ from . import models, schemas, databases as database
 # Create DB tables
 models.Base.metadata.create_all(bind=database.engine)
 
-# FastAPI app
+# FastAPI App
 app = FastAPI(title="MiniBlog 2.0 🚀")
 
 # Dependency to get DB session
