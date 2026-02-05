@@ -1,5 +1,5 @@
 # File: FastApi/router.py
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -26,7 +26,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     
     # 2. Create the user
     fake_hashed_password = user.password + "notreallyhashed"
-    new_user = models.User(email = user.email , hashed_password=fake_hashed_password)
+    new_user = models.User(email = user.email, hashed_password=fake_hashed_password)
     
     db.add(new_user)
     db.commit()
