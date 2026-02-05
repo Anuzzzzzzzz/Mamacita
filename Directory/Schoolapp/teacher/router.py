@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from database import get_db
@@ -29,7 +29,7 @@ def get_teacher_subjects_api(teacher_id: int, db: Session = Depends(get_db)):
 
 @router.post("/create_teacher_subject", response_model=schemas.TeacherSubjectResponse)
 def create_teacher_subject(teacher_subject: schemas.TeacherSubjectCreate,
-                            db: Session = Depends(get_db)):
+                           db: Session = Depends(get_db)):
      db_teacher_subject = service.create_teacher_subject(db, teacher_subject)
      return db_teacher_subject
 
