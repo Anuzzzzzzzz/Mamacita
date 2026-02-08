@@ -19,3 +19,5 @@ Directory/FastApi/sql_app.db
 
 *.csv
 *.pdfScrapping/chrome-mac-arm64/
+
+NotScrapping.ipynb
