@@ -1,17 +1,7 @@
-#
-# from web_app import views
-# path('', views., name='home')
 from django.urls import path
-
 from . import views
-from django import urls
-
-
-
 
 urlpatterns = [
-path('', views.index, name='home')
+    path('', views.index, name='home'),
+    path('item/<int:item_id>/', views.item_detail, name='item_detail'),
 ]
-
-
-
